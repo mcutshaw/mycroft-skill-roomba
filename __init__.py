@@ -12,10 +12,14 @@ from mycroft.skills.core import MycroftSkill, intent_handler
 from mycroft.util.log import LOG
 import requests
 
+url='http://192.168.0.60:9000/api'
 # Each skill is contained within its own class, which inherits base methods
 # from the MycroftSkill class.  You extend this class as shown below.
 
 # TODO: Change "Template" to a unique name for your skill
+
+
+
 class RoombaSkill(MycroftSkill):
 
     # The constructor of the skill, which calls MycroftSkill's constructor
@@ -41,15 +45,20 @@ class RoombaSkill(MycroftSkill):
         # In this case, respond by simply speaking a canned response.
         # Mycroft will randomly speak one of the lines from the file
         #    dialogs/en-us/hello.world.dialog
+        resp = requests.get(f'{url}/local/action/start')
         self.speak_dialog("roomba.started")
 
-    # @intent_handler(IntentBuilder("").require("Count").require("Dir"))
-    # def handle_count_intent(self, message):
-    #     if message.data["Dir"] == "up":
-    #         self.count += 1
-    #     else:  # assume "down"
-    #         self.count -= 1
-    #     self.speak_dialog("count.is.now", data={"count": self.count})
+
+    @intent_handler(IntentBuilder("").require("Pause").require("Roomba"))
+    def handle_pause_roomba_intent(self, message):
+        resp = requests.get(f'{url}/local/action/pause')
+        self.speak_dialog("roomba.paused")
+
+
+    @intent_handler(IntentBuilder("").require("Dock").require("Roomba"))
+    def handle_count_intent(self, message):
+        resp = requests.get(f'{url}/local/action/dock')
+        self.speak_dialog("roomba.docked")
 
     # The "stop" method defines what Mycroft does when told to stop during
     # the skill's execution. In this case, since the skill's functionality
