@@ -27,8 +27,6 @@ class RoombaSkill(MycroftSkill):
         super(RoombaSkill, self).__init__(name="RoombaSkill")
         
         # Initialize working variables used within the skill.
-        self.count = 0
-
     # The "handle_xxxx_intent" function is triggered by Mycroft when the
     # skill's intent is matched.  The intent is defined by the IntentBuilder()
     # pieces, and is triggered when the user's utterance matches the pattern
@@ -46,18 +44,21 @@ class RoombaSkill(MycroftSkill):
         # Mycroft will randomly speak one of the lines from the file
         #    dialogs/en-us/hello.world.dialog
         resp = requests.get(f'{url}/local/action/start')
+        print(resp.text)
         self.speak_dialog("roomba.started")
 
 
     @intent_handler(IntentBuilder("").require("Pause").require("Roomba"))
     def handle_pause_roomba_intent(self, message):
         resp = requests.get(f'{url}/local/action/pause')
+        print(resp.text)
         self.speak_dialog("roomba.paused")
 
 
     @intent_handler(IntentBuilder("").require("Dock").require("Roomba"))
     def handle_count_intent(self, message):
         resp = requests.get(f'{url}/local/action/dock')
+        print(resp.text)
         self.speak_dialog("roomba.docked")
 
     # The "stop" method defines what Mycroft does when told to stop during
