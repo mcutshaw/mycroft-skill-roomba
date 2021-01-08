@@ -12,7 +12,7 @@ from mycroft.skills.core import MycroftSkill, intent_handler
 from mycroft.util.log import LOG
 import requests
 
-url='http://192.168.0.60:9000/api'
+url='http://192.168.0.60:3000/api'
 # Each skill is contained within its own class, which inherits base methods
 # from the MycroftSkill class.  You extend this class as shown below.
 
